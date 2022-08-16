@@ -2,7 +2,7 @@ from turtle import title
 from dash import Dash, html, dcc
 import plotly.express as px
 import pandas as pd
-from data import countries_df,total_df, global_df,make_country_df
+from data import countries_df,total_df
 from builder import make_table
 from dash.dependencies import Input, Output
 
@@ -42,10 +42,10 @@ app.layout = html.Div(
             style={"display":"grid", "gridTemplateColumns":"repeat(5, 1fr)", "gap":"50px"},
             children=[
                 html.Div(style={"grid-column":"span 2"}, children=[dcc.Graph(figure=bars_graph)]),
-                html.Div(style={"grid-column":"span 3","display":"flex","flexDirection":"column","jusifyContent":"center","alignItems":"center","marginTop":"50px"},
+                html.Div(
                     children=[
-                        dcc.Dropdown(style = {"color":"#111111", "width":"300px",}, id="country", options=[{"label": name, "value": name} for name in country_names]),
-                        dcc.Graph(id="country_graph")
+                        dcc.Dropdown(id="country", options=[{"label": name, "value": name} for name in country_names]),
+                        html.H1(children="Hello anonymous", id="country-output")
                     ]
                 )
                 ], )
@@ -56,20 +56,16 @@ app.layout = html.Div(
 
 
 @app.callback(
-    Output("country_graph", "figure"),
+    Output("country-output", "children"),
     [
         Input("country", "value")
     ]
 )
 def upadate_hello(value):
-    if value:
-        df = make_country_df(value)
+    if value is None:
+        return "Hello Ananimous"
     else:
-        df = global_df
-    fig = px.line(df, x="date", y=["confirmed", "death", "recovered"], template="plotly_dark", labels={"variable":"condition", "value":"count"})
-    fig.update_xaxes(rangeslider_visible=True)
-    return fig
-    
+        return f"Hello {value}"
 
 if __name__ == '__main__':
     app.run_server(debug=True)

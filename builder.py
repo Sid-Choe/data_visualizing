@@ -9,7 +9,7 @@ def make_table(df):
                                 html.Tr(
                                     children=[
                                         html.Th(column_name.replace("_", " ")) for column_name in df.columns],
-                                        style={"display":"grid", "gridTemplateColumns":"repeat(4,1fr)", "fontWeight": "600", "fontSize": 16}
+                                        style={"display":"grid", "gridTemplateColumns":"repeat(4,1fr)", "fontWeight": "600", "fontSize": 14}
                                 )
                             ]
                         ),
