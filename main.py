@@ -13,6 +13,7 @@ stylesheets = ["https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css",
  "https://fonts.googleapis.com/css2?family=Open+Sans&display=swap"]
 
 app = Dash(__name__, external_stylesheets=stylesheets)
+app.title = "Corona Dashboard_practice"
 
 bubble_map = px.scatter_geo(countries_df, size="Confirmed", title="Confirmed By Country" ,color_continuous_scale=px.colors.sequential.Oryel , hover_name="Country_Region", color="Confirmed", locations="Country_Region", locationmode="country names", size_max=40, template="plotly_dark", hover_data={"Confirmed":":,2f", "Deaths":":,2f", "Recovered":":,2f", "Country_Region":False})
 
